@@ -1,0 +1,93 @@
+Source: babeltrace
+Section: libs
+Priority: extra
+Maintainer: Jon Bernard <jbernard@debian.org>
+Uploaders: Michael Jeanson <mjeanson@ubuntu.com>
+Build-Depends: debhelper (>= 9~), libglib2.0-dev (>= 2.16), uuid-dev,
+ libpopt-dev, dh-autoreconf, python3-all-dev, swig (>= 2.0),
+ libdw-dev (>= 0.154), libelf-dev (>= 0.154)
+X-Python3-Version: >= 3.0
+Standards-Version: 3.9.8
+Vcs-Git: https://anonscm.debian.org/git/collab-maint/babeltrace.git
+Vcs-Browser: https://anonscm.debian.org/gitweb/?p=collab-maint/babeltrace.git;a=summary
+Homepage: http://www.efficios.com/babeltrace
+
+Package: babeltrace
+Section: utils
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Trace conversion program
+ Babeltrace provides trace reading and writing libraries, as well as a trace
+ converter. Plugins can be created for any trace format to allow its conversion
+ to/from any other supported format.
+ .
+ This package contains the "babeltrace" trace conversion program.
+
+Package: libbabeltrace1
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Babeltrace conversion libraries
+ Babeltrace provides trace reading and writing libraries, as well as a trace
+ converter. Plugins can be created for any trace format to allow its conversion
+ to/from any other supported format.
+ .
+ This package provides the babeltrace trace reading and conversion library.
+
+Package: libbabeltrace-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends}, libbabeltrace1 (= ${binary:Version}),
+ libbabeltrace-ctf-dev (= ${binary:Version})
+Description: Babeltrace development files
+ Babeltrace provides trace reading and writing libraries, as well as a trace
+ converter. Plugins can be created for any trace format to allow its conversion
+ to/from any other supported format.
+ .
+ This package provides the development headers for linking applications against
+ libbabeltrace.
+
+Package: libbabeltrace-ctf1
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Common Trace Format (CTF) library
+ Babeltrace provides trace reading and writing libraries, as well as a trace
+ converter. Plugins can be created for any trace format to allow its conversion
+ to/from any other supported format.
+ .
+ The Common Trace Format (CTF) aims at specifying a trace format based on the
+ requirements of the industry (through collaboration with the Multicore
+ Association) and the Linux community.
+ .
+ This package provides CTF plugin for Babeltrace.
+
+Package: libbabeltrace-ctf-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends}, libbabeltrace-ctf1 (= ${binary:Version})
+Replaces: libbabeltrace-dev (<< 1.5.0~rc1-2)
+Breaks: libbabeltrace-dev (<< 1.5.0~rc1-2)
+Description: Common Trace Format (CTF) development files
+ Babeltrace provides trace reading and writing libraries, as well as a trace
+ converter. Plugins can be created for any trace format to allow its conversion
+ to/from any other supported format.
+ .
+ The Common Trace Format aims at specifying a trace format based on the
+ requirements of the industry (through collaboration with the Multicore
+ Association) and the Linux community.
+ .
+ This package provides the development headers to link applications directly
+ against libbabeltrace-ctf.
+
+Package: python3-babeltrace
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends}
+Description: Babeltrace Python 3 bindings
+ Babeltrace provides trace reading and writing libraries, as well as a trace
+ converter. Plugins can be created for any trace format to allow its conversion
+ to/from any other supported format.
+ .
+ This package provides Python 3 bindings for babeltrace.
