@@ -1,8 +1,9 @@
 Source: babeltrace
 Section: libs
 Priority: extra
-Maintainer: Jon Bernard <jbernard@debian.org>
-Uploaders: Michael Jeanson <mjeanson@ubuntu.com>
+Maintainer: Pexip AS <packaging@pexip.com>
+XSBC-Pexip-Original-Maintainer: Jon Bernard <jbernard@debian.org>
+XSBC-Pexip-Original-Uploaders: Michael Jeanson <mjeanson@ubuntu.com>
 Build-Depends: debhelper (>= 9~), libglib2.0-dev (>= 2.16), uuid-dev,
  libpopt-dev, dh-autoreconf, python3-all-dev, swig (>= 2.0),
  libdw-dev (>= 0.154), libelf-dev (>= 0.154)
@@ -11,6 +12,7 @@ Standards-Version: 3.9.8
 Vcs-Git: https://anonscm.debian.org/git/collab-maint/babeltrace.git
 Vcs-Browser: https://anonscm.debian.org/gitweb/?p=collab-maint/babeltrace.git;a=summary
 Homepage: http://www.efficios.com/babeltrace
+XS-Pexip-Upstream: http://ftp.debian.org/debian/ stretch
 
 Package: babeltrace
 Section: utils
