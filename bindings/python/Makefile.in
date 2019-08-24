@@ -95,23 +95,23 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/ax_append_flag.m4 \
 	$(top_srcdir)/m4/ax_c___attribute__.m4 \
 	$(top_srcdir)/m4/ax_check_link_flag.m4 \
 	$(top_srcdir)/m4/ax_compare_version.m4 \
-	$(top_srcdir)/m4/ax_lib_elfutils.m4 \
 	$(top_srcdir)/m4/ax_lib_socket_nsl.m4 \
 	$(top_srcdir)/m4/ax_pkg_swig.m4 \
 	$(top_srcdir)/m4/ax_prog_bison_version.m4 \
 	$(top_srcdir)/m4/ax_prog_flex_version.m4 \
 	$(top_srcdir)/m4/ax_pthread.m4 \
 	$(top_srcdir)/m4/ax_require_defined.m4 \
+	$(top_srcdir)/m4/bt_lib_elfutils.m4 \
 	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
 	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
 	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/pprint.m4 \
-	$(top_srcdir)/m4/python_modules.m4 $(top_srcdir)/configure.ac
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = setup.py
 CONFIG_CLEAN_VPATH_FILES =
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -167,8 +167,8 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = babeltrace
-am__DIST_COMMON = $(srcdir)/Makefile.in
+DIST_SUBDIRS = babeltrace .
+am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/setup.py.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 am__relativize = \
   dir0=`pwd`; \
@@ -253,6 +253,7 @@ LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_NO_UNDEFINED = @LT_NO_UNDEFINED@
 LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
@@ -366,7 +367,26 @@ target_vendor = @target_vendor@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@USE_PYTHON_TRUE@SUBDIRS = babeltrace
+@USE_PYTHON_TRUE@SUBDIRS = babeltrace .
+@USE_PYTHON_TRUE@INSTALLED_FILES = $(builddir)/installed_files.txt
+@USE_PYTHON_TRUE@AM_CFLAGS = $(PACKAGE_CFLAGS) -I$(top_srcdir)/include -I$(srcdir)/babeltrace/
+
+# Since the shared object used by the python bindings is not built with libtool
+# we need to manually set the `rpath` during linkage
+@USE_PYTHON_TRUE@AM_LDFLAGS = -L$(top_builddir)/formats/ctf/.libs -L$(top_builddir)/lib/.libs
+@USE_PYTHON_TRUE@BINDINGS_DEPS = setup.py \
+@USE_PYTHON_TRUE@		babeltrace/__init__.py \
+@USE_PYTHON_TRUE@		babeltrace/babeltrace.i \
+@USE_PYTHON_TRUE@		babeltrace/python-complements.c \
+@USE_PYTHON_TRUE@		babeltrace/python-complements.h
+
+@USE_PYTHON_TRUE@BUILD_FLAGS = CC="$(CC)" \
+@USE_PYTHON_TRUE@		CFLAGS="$(GLIB_CFLAGS) $(AM_CFLAGS) $(CFLAGS)" \
+@USE_PYTHON_TRUE@		CPPFLAGS="$(DEFS) $(DEFAULT_INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS)" \
+@USE_PYTHON_TRUE@		LDFLAGS="$(AM_LDFLAGS) $(LDFLAGS) $(GLIB_LIBS) -shared $(LIBS)"
+
+@USE_PYTHON_TRUE@CLEANFILES = babeltrace/babeltrace_wrap.c babeltrace/babeltrace.py build-python-bindings.stamp
+@USE_PYTHON_TRUE@DISTCLEANFILES = setup.py
 all: all-recursive
 
 .SUFFIXES:
@@ -399,6 +419,8 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+setup.py: $(top_builddir)/config.status $(srcdir)/setup.py.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -562,7 +584,8 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-recursive
-all-am: Makefile
+@USE_PYTHON_FALSE@all-local:
+all-am: Makefile all-local
 installdirs: installdirs-recursive
 installdirs-am:
 install: install-recursive
@@ -587,17 +610,22 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+@USE_PYTHON_FALSE@uninstall-local:
+@USE_PYTHON_FALSE@clean-local:
+@USE_PYTHON_FALSE@install-exec-local:
 clean: clean-recursive
 
-clean-am: clean-generic clean-libtool mostlyclean-am
+clean-am: clean-generic clean-libtool clean-local mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -f Makefile
@@ -621,7 +649,7 @@ install-dvi: install-dvi-recursive
 
 install-dvi-am:
 
-install-exec-am:
+install-exec-am: install-exec-local
 
 install-html: install-html-recursive
 
@@ -659,25 +687,59 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am:
+uninstall-am: uninstall-local
 
 .MAKE: $(am__recursive_targets) install-am install-strip
 
-.PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am check \
-	check-am clean clean-generic clean-libtool cscopelist-am ctags \
-	ctags-am distclean distclean-generic distclean-libtool \
-	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
+.PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am all-local \
+	check check-am clean clean-generic clean-libtool clean-local \
+	cscopelist-am ctags ctags-am distclean distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-exec-local install-html \
 	install-html-am install-info install-info-am install-man \
 	install-pdf install-pdf-am install-ps install-ps-am \
 	install-strip installcheck installcheck-am installdirs \
 	installdirs-am maintainer-clean maintainer-clean-generic \
 	mostlyclean mostlyclean-generic mostlyclean-libtool pdf pdf-am \
-	ps ps-am tags tags-am uninstall uninstall-am
+	ps ps-am tags tags-am uninstall uninstall-am uninstall-local
 
 .PRECIOUS: Makefile
 
+@USE_PYTHON_TRUE@all-local: build-python-bindings.stamp
+
+@USE_PYTHON_TRUE@$(builddir)/babeltrace/__init__.py: $(srcdir)/babeltrace/__init__.py.in
+@USE_PYTHON_TRUE@	cd babeltrace && $(MAKE) __init__.py
+
+@USE_PYTHON_TRUE@$(builddir)/babeltrace/babeltrace.i: $(srcdir)/babeltrace/babeltrace.i.in
+@USE_PYTHON_TRUE@	cd babeltrace && $(MAKE) babeltrace.i
+
+@USE_PYTHON_TRUE@build-python-bindings.stamp: $(BINDINGS_DEPS)
+@USE_PYTHON_TRUE@	$(BUILD_FLAGS) $(PYTHON) $(builddir)/setup.py build_ext
+@USE_PYTHON_TRUE@	$(BUILD_FLAGS) $(PYTHON) $(builddir)/setup.py build
+@USE_PYTHON_TRUE@	touch $@
+
+@USE_PYTHON_TRUE@install-exec-local: build-python-bindings.stamp
+@USE_PYTHON_TRUE@	@opts="--prefix=$(prefix) --record $(INSTALLED_FILES) --verbose --no-compile $(DISTSETUPOPTS)"; \
+@USE_PYTHON_TRUE@	if [ "$(DESTDIR)" != "" ]; then \
+@USE_PYTHON_TRUE@		opts="$$opts --root=$(DESTDIR)"; \
+@USE_PYTHON_TRUE@	fi; \
+@USE_PYTHON_TRUE@	$(PYTHON) $(builddir)/setup.py install $$opts;
+
+@USE_PYTHON_TRUE@clean-local:
+@USE_PYTHON_TRUE@	rm -rf $(builddir)/build
+
+# Distutils' setup.py does not include an uninstall target, we thus need to do
+# it manually. We save the path of the files that were installed during the install target
+# and delete them during the uninstallation.
+@USE_PYTHON_TRUE@uninstall-local:
+@USE_PYTHON_TRUE@	if [ "$(DESTDIR)" != "" ]; then \
+@USE_PYTHON_TRUE@		$(SED) -i "s|^|$(DESTDIR)/|g" $(INSTALLED_FILES); \
+@USE_PYTHON_TRUE@	fi
+@USE_PYTHON_TRUE@	cat $(INSTALLED_FILES) | xargs rm -rf || true
+@USE_PYTHON_TRUE@	$(GREP) "__init__.py" $(INSTALLED_FILES) | xargs dirname | xargs rm -rf || true
+@USE_PYTHON_TRUE@	rm -f $(INSTALLED_FILES)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
