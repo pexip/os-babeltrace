@@ -1,3 +1,3 @@
 version=3
 opts=pgpsigurlmangle=s/$/.asc/ \
-    https://www.efficios.com/files/babeltrace/babeltrace-([\d\.]*)\.tar\.(?:gz|bz2)
+    https://www.efficios.com/files/babeltrace/babeltrace-(1\.[\d\.]*)\.tar\.(?:gz|bz2)

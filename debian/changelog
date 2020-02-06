@@ -1,13 +1,29 @@
-babeltrace (1.5.6-2+deb10u1) buster; urgency=medium
+babeltrace (1.5.8-1) unstable; urgency=medium
 
-  [ Andreas Beckmann ]
-  * Non-maintainer upload.
-  * Backport symbols fix from 1.5.7-1.
+  * [68134b2] d/watch: restrict this package to the 1.x series
+  * [f3450d9] New upstream version 1.5.8
+  * [d3be500] d/control: Set Rules-Requires-Root to no
+  * [d51cdba] Add upstream metadata file
+  * [cd105e9] Bump standard to 4.5.0, no changes necessary
 
-  [ Michael Jeanson ]
-  * Bump ctf symbols depends to post merge version (Closes: #931147)
+ -- Michael Jeanson <mjeanson@debian.org>  Thu, 06 Feb 2020 11:04:49 -0500
 
- -- Andreas Beckmann <anbe@debian.org>  Sat, 24 Aug 2019 12:10:28 +0200
+babeltrace (1.5.7-2) unstable; urgency=medium
+
+  * [1062de0] Add build dependency on dh-python (Closes: #944933)
+
+ -- Michael Jeanson <mjeanson@debian.org>  Mon, 18 Nov 2019 15:51:11 -0500
+
+babeltrace (1.5.7-1) unstable; urgency=medium
+
+  * [bb5426d] Add Salsa CI configuration
+  * [1af32cb] New upstream version 1.5.7
+  * [dfd1b39] Update symbols for 1.5.7
+  * [26148af] Bump debhelper compat to 10
+  * [00e6858] Bump standards version to 4.4.0
+  * [1e88433] Bump ctf symbols depends to post merge version (Closes: #931147)
+
+ -- Michael Jeanson <mjeanson@debian.org>  Fri, 12 Jul 2019 15:49:24 -0400
 
 babeltrace (1.5.6-2) unstable; urgency=medium
 
