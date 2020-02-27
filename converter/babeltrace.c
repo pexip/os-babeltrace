@@ -76,6 +76,12 @@ static int opt_stream_intersection;
 
 static struct bt_format *fmt_read;
 
+void bt_dummy_hook(void);
+void bt_lttng_live_hook(void);
+void bt_ctf_hook(void);
+void bt_ctf_text_hook(void);
+void bt_ctf_metadata_hook(void);
+
 static
 void strlower(char *str)
 {
@@ -663,6 +669,7 @@ int convert_trace(struct bt_trace_descriptor *td_write,
 	struct bt_iter_pos *begin_pos = NULL, *end_pos = NULL;
 	struct bt_ctf_event *ctf_event;
 	int ret;
+	int error_holder = 0;
 
 	sout = container_of(td_write, struct ctf_text_stream_pos,
 			trace_descriptor);
@@ -689,11 +696,18 @@ int convert_trace(struct bt_trace_descriptor *td_write,
 			goto end;
 		}
 		ret = bt_iter_next(bt_ctf_get_iter(iter));
-		if (ret < 0) {
+		if (ret == -ERANGE) {
+			/*
+			 * Remember that a range (truncated packet)
+			 * error occurred and continue.
+			 */
+			error_holder = 1;
+			continue;
+		} else if (ret < 0) {
 			goto end;
 		}
 	}
-	ret = 0;
+	ret = error_holder;
 
 end:
 	bt_ctf_iter_destroy(iter);
@@ -703,6 +717,15 @@ error_iter:
 	return ret;
 }
 
+void call_plugins_hooks(void)
+{
+	bt_dummy_hook();
+	bt_lttng_live_hook();
+	bt_ctf_hook();
+	bt_ctf_text_hook();
+	bt_ctf_metadata_hook();
+}
+
 int main(int argc, char **argv)
 {
 	int ret, partial_error = 0, open_success = 0;
@@ -710,6 +733,8 @@ int main(int argc, char **argv)
 	struct bt_trace_descriptor *td_write;
 	struct bt_context *ctx;
 	int i;
+
+	call_plugins_hooks();
 
 	opt_input_paths = g_ptr_array_new();
 

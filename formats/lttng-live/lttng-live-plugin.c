@@ -41,6 +41,14 @@
 
 static volatile int should_quit;
 
+void bt_lttng_live_hook(void)
+{
+	/*
+	 * Dummy function to prevent the linker from discarding this format as
+	 * "unused" in static builds.
+	 */
+}
+
 int lttng_live_should_quit(void)
 {
 	return should_quit;
@@ -95,7 +103,7 @@ int setup_sighandler(void)
 static
 int parse_url(const char *path, struct lttng_live_ctx *ctx)
 {
-	char remain[3][MAXNAMLEN];
+	char remain[3][MAXNAMLEN] = { { 0 } };
 	int ret = -1, proto, proto_offset = 0;
 	size_t path_len = strlen(path);	/* not accounting \0 */
 
@@ -177,6 +185,7 @@ int parse_url(const char *path, struct lttng_live_ctx *ctx)
 	if (ret != 2) {
 		fprintf(stderr, "[error] Format : "
 			"net://<hostname>/host/<traced_hostname>/<session_name>\n");
+		ret = -1;
 		goto end;
 	}
 
@@ -215,6 +224,21 @@ gboolean g_uint64p_equal(gconstpointer a, gconstpointer b)
 	return TRUE;
 }
 
+static void free_session_streams(struct lttng_live_session *lsession)
+{
+	struct lttng_live_viewer_stream *lvstream, *tmp;
+
+	bt_list_for_each_entry_safe(lvstream, tmp, &lsession->stream_list,
+			session_stream_node) {
+		/*
+		 * The stream should not be in trace anymore.
+		 */
+		assert(!lvstream->in_trace);
+		bt_list_del(&lvstream->session_stream_node);
+		g_free(lvstream);
+	}
+}
+
 static int lttng_live_open_trace_read(const char *path)
 {
 	int ret = 0;
@@ -222,6 +246,8 @@ static int lttng_live_open_trace_read(const char *path)
 
 	ctx = g_new0(struct lttng_live_ctx, 1);
 	ctx->session = g_new0(struct lttng_live_session, 1);
+
+	BT_INIT_LIST_HEAD(&ctx->session->stream_list);
 
 	/* We need a pointer to the context from the packet_seek function. */
 	ctx->session->ctx = ctx;
@@ -263,8 +289,8 @@ static int lttng_live_open_trace_read(const char *path)
 
 end_free:
 	g_hash_table_destroy(ctx->session->ctf_traces);
+	free_session_streams(ctx->session);
 	g_free(ctx->session);
-	g_free(ctx->session->streams);
 	g_free(ctx);
 
 	if (lttng_live_should_quit()) {

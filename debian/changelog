@@ -1,3 +1,92 @@
+babeltrace (1.5.6-2+deb10u1) buster; urgency=medium
+
+  [ Andreas Beckmann ]
+  * Non-maintainer upload.
+  * Backport symbols fix from 1.5.7-1.
+
+  [ Michael Jeanson ]
+  * Bump ctf symbols depends to post merge version (Closes: #931147)
+
+ -- Andreas Beckmann <anbe@debian.org>  Sat, 24 Aug 2019 12:10:28 +0200
+
+babeltrace (1.5.6-2) unstable; urgency=medium
+
+  [ Jelmer Vernooĳ ]
+  * [8be51d5] Remove unnecessary X-Python{,3}-Version field in debian/control.
+
+  [ Michael Jeanson ]
+  * [55f7b4a] Force shlibs depends on >=1.5.3-2 (Closes: #910577)
+  * [9ba4f13] Add Build-Depends-Package to symbols file
+  * [d96442e] Bump standards version to 4.2.1
+
+ -- Michael Jeanson <mjeanson@debian.org>  Tue, 11 Dec 2018 16:52:03 -0500
+
+babeltrace (1.5.6-1) unstable; urgency=medium
+
+  * [6ebf331] New upstream version 1.5.6
+  * [824703a] Bump standard to 4.1.4, no changes necessary
+  * [20d7f24] Use salsa canonical uri in VCS-Browser
+
+ -- Michael Jeanson <mjeanson@debian.org>  Tue, 03 Jul 2018 18:02:13 -0400
+
+babeltrace (1.5.5-1) unstable; urgency=medium
+
+  * [d159cca] Version the transitionnal depends (Closes: #890670)
+  * [5e18412] New upstream version 1.5.5
+  * [095504e] Bump standard to 4.1.3, no changes necessary
+  * [fcefc93] Mark libbabeltrace-dev 'Multi-Arch: same'
+
+ -- Michael Jeanson <mjeanson@debian.org>  Mon, 26 Mar 2018 17:24:59 -0400
+
+babeltrace (1.5.4-1) unstable; urgency=medium
+
+  * [d7747bc] Switched my uploader email to @debian.org
+  * [a2037ba] New upstream version 1.5.4
+  * [153912f] Update symbols for 1.5.4
+  * [33d7b01] Moved VCS to salsa.debian.org
+  * [559a42a] Use secure url for homepage
+
+ -- Michael Jeanson <mjeanson@debian.org>  Sat, 03 Feb 2018 11:07:04 -0500
+
+babeltrace (1.5.3-4) unstable; urgency=medium
+
+  * [bc6b49b] Add transitional ctf packages (Closes: #879116)
+
+ -- Michael Jeanson <mjeanson@ubuntu.com>  Thu, 19 Oct 2017 15:52:28 -0400
+
+babeltrace (1.5.3-3) unstable; urgency=medium
+
+  * [c0ecf19] Add versioned provides for ctf (Closes: #879088)
+
+ -- Michael Jeanson <mjeanson@ubuntu.com>  Thu, 19 Oct 2017 10:45:25 -0400
+
+babeltrace (1.5.3-2) unstable; urgency=medium
+
+  * [a5b4bb1] Merge libbabeltrace-ctf1 into libbabeltrace1
+  * [13d8932] Changed deprecated extra priority to optional
+  * [fa19188] Use https url in watch file
+  * [f5ea759] Set python section for python3-babeltrace
+  * [cae5b76] Bump standards version to 4.1.1
+
+ -- Michael Jeanson <mjeanson@ubuntu.com>  Wed, 18 Oct 2017 15:56:22 -0400
+
+babeltrace (1.5.3-1) unstable; urgency=medium
+
+  * [ac63ca0] Do not consider rc versions in watch file
+  * [cd63c5f] Move to DEP-14 branch naming
+  * [60f347a] New upstream version 1.5.3
+  * [76c1fb4] Remove python install hack fixed upstream
+  * [dc2939b] Bump standard to 4.0.0
+
+ -- Michael Jeanson <mjeanson@ubuntu.com>  Mon, 07 Aug 2017 16:22:31 -0400
+
+babeltrace (1.5.2-1) unstable; urgency=medium
+
+  * [7bb1102] New upstream version 1.5.2
+  * [f524d13] Update symbols for 1.5.2
+
+ -- Michael Jeanson <mjeanson@ubuntu.com>  Tue, 21 Feb 2017 17:16:39 -0500
+
 babeltrace (1.5.1-1pexip1) pexip; urgency=medium
 
   * Prepare Pexip packaging
