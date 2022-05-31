@@ -62,6 +62,7 @@ libbabeltrace.so.1 libbabeltrace1 #MINVER#
  bt_heap_remove@Base 1.2.1
  bt_heap_replace_max@Base 1.2.1
  bt_init_trace_collection@Base 1.2.1
+ bt_int_is_char@Base 1.5.7
  bt_integer_declaration_new@Base 1.2.1
  bt_iter_add_trace@Base 1.2.1
  bt_iter_create@Base 1.2.1
