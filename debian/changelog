@@ -1,3 +1,9 @@
+babeltrace (1.5.8-1pexip1) pexip; urgency=medium
+
+  * Initial bullseye build
+
+ -- Mark Hymers <mark.hymers@pexip.com>  Thu, 02 Jun 2022 14:42:02 +0100
+
 babeltrace (1.5.8-1) unstable; urgency=medium
 
   * [68134b2] d/watch: restrict this package to the 1.x series
