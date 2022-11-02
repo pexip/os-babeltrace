@@ -13,7 +13,7 @@ Signed-off-by: Michael Jeanson <mjeanson@efficios.com>
 
 --- a/include/babeltrace/compat/limits.h
 +++ b/include/babeltrace/compat/limits.h
-@@ -43,4 +43,9 @@
+@@ -45,4 +45,9 @@
  
  #endif /* __linux__, __FreeBSD__, _POSIX_HOST_NAME_MAX */
  

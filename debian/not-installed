@@ -1,0 +1,6 @@
+usr/lib/${DEB_HOST_MULTIARCH}/*.la
+usr/lib/python3/dist-packages/*.egg-info
+usr/share/doc/babeltrace/ChangeLog
+usr/share/doc/babeltrace/gpl-2.0.txt
+usr/share/doc/babeltrace/LICENSE
+usr/share/doc/babeltrace/mit-license.txt

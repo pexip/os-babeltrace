@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Jon Bernard <jbernard@debian.org>
 Uploaders: Michael Jeanson <mjeanson@debian.org>
-Build-Depends: debhelper (>= 10~),
+Build-Depends: debhelper-compat (= 13),
  dh-python,
  libdw-dev (>= 0.154),
  libelf-dev (>= 0.154),

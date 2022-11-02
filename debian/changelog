@@ -1,3 +1,29 @@
+babeltrace (1.5.11-1) unstable; urgency=medium
+
+  * [84c2292] New upstream version 1.5.11
+  * [6344803] Drop patches merged upstream
+
+ -- Michael Jeanson <mjeanson@debian.org>  Wed, 02 Nov 2022 11:48:32 -0400
+
+babeltrace (1.5.8-3) unstable; urgency=medium
+
+  * [d06a2f0] Update Salsa CI configuration
+  * [8d0c59c] Fix popt use after free (Closes: #1022419)
+  * [577d3d3] Migrate to debhelper 13
+  * [b689c6f] d/control: Drop X-Python3-Version
+
+ -- Michael Jeanson <mjeanson@debian.org>  Sun, 30 Oct 2022 14:56:36 -0400
+
+babeltrace (1.5.8-2) unstable; urgency=medium
+
+  * [dd92c82] Add support for python 3.10 (Closes: #1002390)
+  * [5ccdfe4] Move to debhelper 12
+  * [55baa0e] Bump watch file to version 4
+  * [62bb766] Remove 'Homepage' from upstream metadata
+  * [1a6eaf3] Add lintian overrides for tests artifacts
+
+ -- Michael Jeanson <mjeanson@debian.org>  Sat, 22 Jan 2022 11:14:17 -0500
+
 babeltrace (1.5.8-1) unstable; urgency=medium
 
   * [68134b2] d/watch: restrict this package to the 1.x series
