@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Pexip AS <packaging@pexip.com>
 XSBC-Pexip-Original-Maintainer: Jon Bernard <jbernard@debian.org>
 XSBC-Pexip-Original-Uploaders: Michael Jeanson <mjeanson@debian.org>
-Build-Depends: debhelper (>= 10~),
+Build-Depends: debhelper-compat (= 13),
  dh-python,
  libdw-dev (>= 0.154),
  libelf-dev (>= 0.154),
