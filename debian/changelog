@@ -1,3 +1,9 @@
+babeltrace (1.5.11-1pexip1) pexip-bookworm; urgency=medium
+
+  * Initial bookworm build
+
+ -- Mark Hymers <mark.hymers@pexip.com>  Thu, 16 Nov 2023 09:55:16 +0000
+
 babeltrace (1.5.11-1) unstable; urgency=medium
 
   * [84c2292] New upstream version 1.5.11
