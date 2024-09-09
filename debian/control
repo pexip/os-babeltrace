@@ -10,9 +10,10 @@ Build-Depends: debhelper-compat (= 13),
  libglib2.0-dev (>= 2.16),
  libpopt-dev,
  python3-all-dev,
+ python3-setuptools,
  swig (>= 2.0),
  uuid-dev
-Standards-Version: 4.5.0
+Standards-Version: 4.6.2
 Vcs-Git: https://salsa.debian.org/debian/babeltrace.git
 Vcs-Browser: https://salsa.debian.org/debian/babeltrace
 Homepage: https://www.efficios.com/babeltrace
@@ -44,17 +45,6 @@ Description: Babeltrace conversion libraries
  .
  This package provides the babeltrace trace reading and conversion library.
 
-Package: libbabeltrace-ctf1
-Section: oldlibs
-Architecture: all
-Depends: libbabeltrace1 (>= 1.5.3-4~), ${misc:Depends}
-Description: Babeltrace conversion libraries (transitional package)
- Babeltrace provides trace reading and writing libraries, as well as a trace
- converter. Plugins can be created for any trace format to allow its conversion
- to/from any other supported format.
- .
- This is a transitional package. It can safely be removed.
-
 Package: libbabeltrace-dev
 Section: libdevel
 Architecture: any
@@ -70,17 +60,6 @@ Description: Babeltrace development files
  .
  This package provides the development headers for linking applications against
  libbabeltrace.
-
-Package: libbabeltrace-ctf-dev
-Section: oldlibs
-Architecture: all
-Depends: libbabeltrace-dev (>= 1.5.3-4~), ${misc:Depends}
-Description: Babeltrace development files (transitional package)
- Babeltrace provides trace reading and writing libraries, as well as a trace
- converter. Plugins can be created for any trace format to allow its conversion
- to/from any other supported format.
- .
- This is a transitional package. It can safely be removed.
 
 Package: python3-babeltrace
 Section: python

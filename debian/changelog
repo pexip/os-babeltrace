@@ -1,3 +1,26 @@
+babeltrace (1.5.11-4) unstable; urgency=medium
+
+  * [db824bb] Add python3-setuptools build-depends (Closes: #1080558)
+
+ -- Michael Jeanson <mjeanson@debian.org>  Mon, 09 Sep 2024 14:17:17 -0400
+
+babeltrace (1.5.11-3) unstable; urgency=medium
+
+  * [d8f26f8] Don't delete bison files on distclean (Closes: #1049822)
+  * [c3567d8] Use execute_after_ to clean python files
+  * [1ca60d2] Bump standard to 4.6.2, no changes necessary
+
+ -- Michael Jeanson <mjeanson@debian.org>  Tue, 17 Oct 2023 15:43:03 -0400
+
+babeltrace (1.5.11-2) unstable; urgency=medium
+
+  * [9b783d2] Clean python files (Closes: #1043700)
+  * [9e260da] Remove libbabeltrace-ctf1 transitionnal package (Closes: #1032634)
+  * [b1a6aca] Remove libbabeltrace-ctf-dev transitionnal package (Closes: #1032633)
+  * [b1e489d] Update upstream signing key
+
+ -- Michael Jeanson <mjeanson@debian.org>  Mon, 14 Aug 2023 11:49:17 -0400
+
 babeltrace (1.5.11-1) unstable; urgency=medium
 
   * [84c2292] New upstream version 1.5.11
