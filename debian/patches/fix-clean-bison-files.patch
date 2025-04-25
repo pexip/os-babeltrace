@@ -1,0 +1,11 @@
+Add the bison generated files to maintainer clean files so they are not deleted
+on a make distclean.
+
+--- a/formats/ctf/metadata/Makefile.am
++++ b/formats/ctf/metadata/Makefile.am
+@@ -44,4 +44,4 @@
+ 		libctf-parser.la \
+ 		libctf-ast.la
+ 
+-CLEANFILES = ctf-lexer.c ctf-parser.c ctf-parser.h ctf-parser.output
++MAINTAINERCLEANFILES = ctf-lexer.c ctf-parser.c ctf-parser.h ctf-parser.output
