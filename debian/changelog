@@ -1,3 +1,9 @@
+babeltrace (1.5.11-4+pexip25u1) pexip-trixie; urgency=medium
+
+  * Initial trixie build
+
+ -- Mark Hymers <mark.hymers@pexip.com>  Tue, 29 Apr 2025 22:27:49 +0100
+
 babeltrace (1.5.11-4) unstable; urgency=medium
 
   * [db824bb] Add python3-setuptools build-depends (Closes: #1080558)
